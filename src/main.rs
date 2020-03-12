@@ -1,7 +1,7 @@
 extern crate gtk;
 extern crate gio;
 
-use gtk::{ WidgetExt, WindowExt };
+use gtk::{ WidgetExt, WindowExt, ContainerExt };
 use gio::{ ApplicationExt };
 
 fn main() {
@@ -9,7 +9,13 @@ fn main() {
         Ok(app) => {
             app.connect_activate(|app| {
                 let win = gtk::ApplicationWindow::new(&app);
-                win.set_title("Hello Gtk-rs");
+                win.set_default_size(800, 600);
+                win.set_title("NoteBit");
+
+                let scr_win = gtk::ScrolledWindow::new(None, None);
+                let txt_view = gtk::TextView::new();
+                scr_win.add(&txt_view);
+                win.add(&scr_win);
                 win.show_all();
             });
 
