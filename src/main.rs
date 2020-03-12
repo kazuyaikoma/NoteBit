@@ -18,4 +18,5 @@ fn main() {
         Err(_) => {
             println!("Application start up error");
         }
-};
+    };
+}
