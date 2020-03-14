@@ -136,4 +136,6 @@ fn run_file_chooser_dialog() -> Option<gio::File> {
     }
 
     dialog.destroy();
+
+    file
 }
