@@ -139,3 +139,20 @@ fn run_file_chooser_dialog() -> Option<gio::File> {
 
     file
 }
+
+fn open(file: gio::File, app: gtk::Application) {
+    let win = create_window(&app);
+    load_file(file.clone(), win.clone());
+    win.set_title(file.get_basename().unwrap().to_str().unwrap());
+}
+
+fn load_file(file: gio::File, win: gtk::ApplicationWindow) {
+    if let Ok((v, _)) = file.load_contents(None) {
+        let text = String::from_utf8(v).unwrap();
+        let scr_win = win.get_child().unwrap().downcast::<gtk::ScrolledWindow>().ok().unwrap();
+        let txt_view = scr_win.get_child().unwrap().downcast::<gtk::TextView>().ok().unwrap();
+        let buf = txt_view.get_buffer().unwrap();
+
+        buf.set_text(&text);
+    }
+}
